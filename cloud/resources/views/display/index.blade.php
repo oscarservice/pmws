@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="row" style="margin-bottom:0;font-size:{{ $settings->size }}px;color:{{ $settings->color }}">
-        <marquee>{{ $settings->notification }}</marquee>
+        <marquee id="notificationMsg">{{ $settings->notification }}</marquee>
     </div>
 @endsection
 
@@ -59,7 +59,10 @@
                 url: "{{ url('assets/files/display') }}",
                 cache: false,
                 success: function(response) {
-                    s = JSON.parse(response);
+                    var json = JSON.parse(response);
+                    $('#notificationMsg').text(json.notification);
+
+                    s = json.calls;
                     if (curr!=s[0].call_id) {
                         $("#callarea").fadeOut(function(){
                             $('#num0').html(s[0].number);
@@ -99,7 +102,7 @@
                 cache: false,
                 success: function(response) {
                     s = JSON.parse(response);
-                    curr = s[0].call_id;
+                    curr = s.calls[0].call_id;
                 }
             });
             checkcall();

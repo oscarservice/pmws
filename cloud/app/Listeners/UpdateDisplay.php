@@ -36,6 +36,13 @@ class UpdateDisplay
             $data[$i]['counter'] = (isset($calls[$i]))?$calls[$i]->counter->name:'NIL';
         }
 
-        file_put_contents(base_path('assets/files/display'), json_encode($data));
+        //wq9: Add notification text
+        $setting = \App\Models\Setting::first();
+        $out = [
+            'notification' => $setting->notification,
+            'calls' => $data
+        ];
+
+        file_put_contents(base_path('assets/files/display'), json_encode($out));
     }
 }

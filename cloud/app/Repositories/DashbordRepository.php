@@ -107,6 +107,8 @@ class DashbordRepository
         $setting->color = $data['color'];
         $setting->save();
 
+        event(new \App\Events\TokenCalled());
+
         return $setting;
     }
 }
